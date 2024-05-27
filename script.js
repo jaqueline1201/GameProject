@@ -35,7 +35,15 @@ let girlImg = new Image();
 girlImg.onload = function (){
     girlReady = true;
 };
-girlImg.src="images/girl.png";
+girlImg.src="images/spriteSheet.png";
+
+//**********Pearl Image*********//
+let pearlReady = false;
+let pearlImg = new Image();
+pearlImg.onload = function(){
+    pearlReady = true;
+};
+pearlImg.src="images/pearl.png"
 //**********Crab Image*********//
 let crabReady = false;
 let crabImg = new Image();
@@ -44,12 +52,35 @@ crabImg.onload = function(){
 };
 crabImg.src ="images/crab.gif"
 //**********Palm Tree Image**********//
-// let palmTreeReady = false;
-// let palmTreeImg =  new Image();
-// palmTreeImg.onload =  function (){
-//     palmTreeReady = true;
-// };
-// palmTreeImg.src="images/palmTree.png";
+let palmTreeReady = false;
+let palmTreeImg =  new Image();
+palmTreeImg.onload =  function (){
+    palmTreeReady = true;
+};
+palmTreeImg.src="images/palmTree.gif";
+
+//**********Game Objects**********//
+let girl = {
+    speed: 256,
+    x:0,
+    y:0
+};
+
+let crab = {
+    speed:100,
+    x:0,
+    y:0
+};
+
+let pearl = {
+    x:0,
+    y:0
+};
+
+
+let pearlCollected = 0; 
+
+
 
 //**********The Main Game Loop**********//
 let main = function() {
@@ -69,13 +100,36 @@ let render = function(){
     if (borderSideReady) {
         ctx.drawImage(borderSideImg, 0,0);
         ctx.drawImage(borderSideImg, (1000-64),0);
-        
     }
-
+    if (girlReady) {
+        ctx.drawImage(girlImg,girl.x,girl.y);
+    }
+    if (pearlReady) {
+        ctx.drawImage(pearlImg,0,0);
+    }
+    if (crabReady){
+        ctx.drawImage(crabImg,crab.x,crab.y);
+    }
+    if (palmTreeReady) {
+        ctx.drawImage(palmTreeImg,0,0)
+    }
 };
+
+//**********Reset the Game**********//
+let reset = function (){
+    girl.x = canvas.width/2;
+    girl.y = canvas.height/2;
+
+    crab.x= 64 + (Math.random() * (canvas.width - 192));
+    crab.y =64 + (Math.random() * (canvas.height - 192));
+
+    pearl.x= 64 + (Math.random() * (canvas.width - 192));
+    pearl.y =64 + (Math.random() * (canvas.height - 192));
+}
+
 //**********To play the Game*********//
 let then = Date.now();
-// reset();
+reset();
 main(); // To call the main game loop//
 
 

@@ -4,4 +4,14 @@ h1 {
     font-weight: 400;
     font-size: 100px;
     font-style: normal;
+    color:#000683;
+}
+
+footer {
+    text-align: center;
+    font-family: "Comic Neue", cursive;
+    font-weight: 600;
+    font-size: 25px;
+    margin-top: 2%;
+    color:#000683;
 }
