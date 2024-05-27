@@ -77,6 +77,10 @@ let pearl = {
     y:0
 };
 
+let palmTree = {
+    x:0,
+    y:0
+};
 
 let pearlCollected = 0; 
 
@@ -105,26 +109,29 @@ let render = function(){
         ctx.drawImage(girlImg,girl.x,girl.y);
     }
     if (pearlReady) {
-        ctx.drawImage(pearlImg,0,0);
+        ctx.drawImage(pearlImg,pearl.x,pearl.y);
     }
     if (crabReady){
         ctx.drawImage(crabImg,crab.x,crab.y);
     }
     if (palmTreeReady) {
-        ctx.drawImage(palmTreeImg,0,0)
+        ctx.drawImage(palmTreeImg, palmTree.x,palmTree.y)
     }
 };
 
 //**********Reset the Game**********//
 let reset = function (){
-    girl.x = canvas.width/2;
-    girl.y = canvas.height/2;
+    girl.x = (canvas.width/2)-32;
+    girl.y = (canvas.height/2)-32;
 
     crab.x= 64 + (Math.random() * (canvas.width - 192));
     crab.y =64 + (Math.random() * (canvas.height - 192));
 
     pearl.x= 64 + (Math.random() * (canvas.width - 192));
     pearl.y =64 + (Math.random() * (canvas.height - 192));
+
+    palmTree.x = 64 + (Math.random() * (canvas.width -192));
+    palmTree.y = 64 + (Math.random() * (canvas.height -192));
 }
 
 //**********To play the Game*********//
