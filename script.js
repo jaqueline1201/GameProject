@@ -13,7 +13,22 @@ let backgroundImg = new Image();
 backgroundImg.onload = function (){
     backgroundReady = true;
 };
-backgroundImg.src = "images/backgroundSand2.png";
+backgroundImg.src = "images/backgroundSand4.png";
+//**********Border Image**********//
+//Top border//
+let borderTopReady = false;
+let borderTopImg = new Image();
+borderTopImg.onload = function(){
+    borderTopReady = true;
+};
+borderTopImg.src = "images/waterTB.png"
+//Side border//
+let borderSideReady = false;
+let borderSideImg = new Image();
+borderSideImg.onload = function(){
+    borderSideReady = true;
+};
+borderSideImg.src = "images/waterLR.png"
 //**********Character Image**********//
 let girlReady = false;
 let girlImg = new Image();
@@ -45,9 +60,18 @@ let main = function() {
 //**********To Render the Game**********/
 let render = function(){
     if (backgroundReady) {
-        console.log('here2');
         ctx.drawImage(backgroundImg,0,0);
     }
+    if (borderTopReady) {
+        ctx.drawImage(borderTopImg, 0,0);
+        ctx.drawImage(borderTopImg, 0,(1000-64));
+    }
+    if (borderSideReady) {
+        ctx.drawImage(borderSideImg, 0,0);
+        ctx.drawImage(borderSideImg, (1000-64),0);
+        
+    }
+
 };
 //**********To play the Game*********//
 let then = Date.now();
