@@ -3,7 +3,7 @@ const canvas = document.createElement("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = 1000;
 canvas.height = 1000;
-document.body.appendChild(canvas);
+document.getElementById("game").appendChild(canvas);
 
 //Images that the game need//
 
@@ -84,11 +84,50 @@ let palmTree = {
 
 let pearlCollected = 0; 
 
+//**********Keyboard Controls********/
+const keysDown = {};
 
+addEventListener("keydown", function (e){
+    keysDown[e.keyCode]= true;
+}, false);
+
+addEventListener("keyup", function (e){
+    delete keysDown[e.keyCode];
+}, false);
+
+//*********Update Game Objects**********//
+let update = function (modifier) {
+    if (38 in keysDown) {
+        girl.y -= girl.speed * modifier;
+    }
+    if (40 in keysDown) {
+        girl.y += girl.speed * modifier;
+    }
+    if (37 in keysDown) {
+        girl.x -= girl.speed * modifier;
+    }
+    if (39 in keysDown) {
+        girl.x += girl.speed * modifier;
+    }
+
+    if (
+        girl.x <= (pearl.x+ 32)
+        && pearl.x <= (girl.x + 32)
+        && girl.y <= (pearl.y + 32)
+        && pearl.y <= (girl.y + 32)
+    ) {
+        ++ pearlCollected;
+        reset(); 
+    }
+}
 
 //**********The Main Game Loop**********//
 let main = function() {
+    let now = Date.now();
+    let delta = now - then;
+    update(delta / 1000);
     render ();
+    then = now;
     requestAnimationFrame(main);
 };
 
@@ -117,7 +156,12 @@ let render = function(){
     if (palmTreeReady) {
         ctx.drawImage(palmTreeImg, palmTree.x,palmTree.y)
     }
+//score//
+
+document.getElementById("counting").innerHTML = pearlCollected;
 };
+
+
 
 //**********Reset the Game**********//
 let reset = function (){

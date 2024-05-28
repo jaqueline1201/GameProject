@@ -5,8 +5,38 @@ h1 {
     font-size: 100px;
     font-style: normal;
     color:#000683;
+    -webkit-animation: colorchange 20s infinite alternate;
 }
-
+@-webkit-keyframes colorchange {
+    0% {
+      color: blue;
+    }
+    20% {
+      color: green;
+    }
+    40% {
+      color: blue;
+    }
+    50% {
+      color: #34495e;
+    }
+    60% {
+      color: blue;
+    }
+    70% {
+      color: #2980b9;
+    }
+    80% {
+      color: orangered;
+    }
+    90% {
+      color: #2980b9;
+    }
+  }
+body {
+    background: rgb(227,255,244);
+background: radial-gradient(circle, rgba(227,255,244,1) 14%, rgba(129,241,237,1) 44%, rgba(112,168,255,1) 83%);
+}
 footer {
     text-align: center;
     font-family: "Comic Neue", cursive;
@@ -14,4 +44,16 @@ footer {
     font-size: 25px;
     margin-top: 2%;
     color:#000683;
+}
+
+#score {
+    font-family: "Comic Neue", cursive;
+    font-size: 30px;
+    color: black;
+}
+
+#wrapper {
+    display: flex;
+    gap: 30px;
+
 }
