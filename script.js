@@ -97,16 +97,16 @@ addEventListener("keyup", function (e){
 
 //*********Update Game Objects**********//
 let update = function (modifier) {
-    if (38 in keysDown) {
+    if (38 in keysDown && girl.y > 64 + 4) {
         girl.y -= girl.speed * modifier;
     }
-    if (40 in keysDown) {
+    if (40 in keysDown && girl.y < canvas.height - (128 + 6)) {
         girl.y += girl.speed * modifier;
     }
-    if (37 in keysDown) {
+    if (37 in keysDown && girl.x > (64 + 4)) {
         girl.x -= girl.speed * modifier;
     }
-    if (39 in keysDown) {
+    if (39 in keysDown && girl.x < canvas. width - (128 + 6)) {
         girl.x += girl.speed * modifier;
     }
 
