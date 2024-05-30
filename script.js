@@ -104,7 +104,7 @@ let palmTree = {
 
 let pearlCollected = 0; 
 
-let caughtbyaCrab = 0;
+let caughtbyaCrab = 5;
 
 //**********Keyboard Controls********/
 const keysDown = {};
@@ -148,7 +148,7 @@ let update = function (modifier) {
         && girl.y <= (crab1.y + 45)
         && crab1.y <= (girl.y + 45)
     ) {
-        ++ caughtbyaCrab;
+        -- caughtbyaCrab;
         reset();
     };
     if (
@@ -157,7 +157,7 @@ let update = function (modifier) {
         && girl.y <= (crab2.y + 45)
         && crab2.y <= (girl.y + 45)
     ) {
-        ++ caughtbyaCrab;
+        -- caughtbyaCrab;
         reset();
     };
     if (
@@ -166,7 +166,7 @@ let update = function (modifier) {
         && girl.y <= (crab3.y + 45)
         && crab3.y <= (girl.y + 45)
     ) {
-        ++ caughtbyaCrab;
+        -- caughtbyaCrab;
         reset();
     };
     if (
@@ -175,7 +175,7 @@ let update = function (modifier) {
         && girl.y <= (crab4.y + 45)
         && crab4.y <= (girl.y + 45)
     ) {
-        ++ caughtbyaCrab;
+        -- caughtbyaCrab;
         reset();
     };
 
@@ -222,6 +222,8 @@ let render = function(){
 //score//
 
 document.getElementById("counting").innerHTML = pearlCollected;
+
+document.getElementById("livesleft").innerHTML = caughtbyaCrab;
 };
 
 

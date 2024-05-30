@@ -50,6 +50,18 @@ footer {
     font-family: "Comic Neue", cursive;
     font-size: 30px;
     color: black;
+    text-align: center;
+   
+}
+
+#lives {
+    font-family: "Comic Neue", cursive;
+    font-size: 30px;
+    color: black;
+    display: inline-block;
+    margin-top: 25px;
+    
+    text-align: center;
 }
 
 #wrapper {
