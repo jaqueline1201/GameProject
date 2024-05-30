@@ -5,6 +5,14 @@ canvas.width = 1000;
 canvas.height = 1000;
 document.getElementById("game").appendChild(canvas);
 
+//*********Sound that the game need*********//
+let soundCaught = "sounds/caught.wav";
+let soundCollected = "sounds/pearlcollected.wav";
+// let soundYouWin = "sounds/youwin.wav";
+// let soundYouLose = "sounds/youlose.wav";
+let soundEffectsC = document.getElementById("soundEffectsC");
+let soundEffectsCa = document.getElementById("soundEffectsCa");
+
 //Images that the game need//
 
 //**********Background Image**********/
@@ -132,13 +140,20 @@ let update = function (modifier) {
         girl.x += girl.speed * modifier;
     }
 
+//*********Girl collected a pearl//Girl caught by a crab**********//  
     if (
         girl.x <= (pearl.x + 32)
         && pearl.x <= (girl.x + 32)
         && girl.y <= (pearl.y + 32)
         && pearl.y <= (girl.y + 32)
     ) {
+        soundEffectsC.src = soundCollected;
+        soundEffectsC.play();
         ++ pearlCollected;
+        if (pearlCollected == 5) {
+            gameOver = true;
+            alert("YOU WON!");
+        }
         reset(); 
     };
 
@@ -148,7 +163,13 @@ let update = function (modifier) {
         && girl.y <= (crab1.y + 45)
         && crab1.y <= (girl.y + 45)
     ) {
+        soundEffectsCa.src = soundCaught;
+        soundEffectsCa.play(); 
         -- caughtbyaCrab;
+        if(caughtbyaCrab == 5){
+            gameOver = true;
+            alert("YOU LOSE!")
+        }
         reset();
     };
     if (
@@ -157,7 +178,13 @@ let update = function (modifier) {
         && girl.y <= (crab2.y + 45)
         && crab2.y <= (girl.y + 45)
     ) {
+        soundEffectsCa.src = soundCaught;
+        soundEffectsCa.play(); 
         -- caughtbyaCrab;
+        if(caughtbyaCrab == 5){
+            gameOver = true;
+            alert("YOU LOSE!")
+        }
         reset();
     };
     if (
@@ -166,8 +193,15 @@ let update = function (modifier) {
         && girl.y <= (crab3.y + 45)
         && crab3.y <= (girl.y + 45)
     ) {
+        soundEffectsCa.src = soundCaught;
+        soundEffectsCa.play(); 
         -- caughtbyaCrab;
+        if(caughtbyaCrab == 5){
+            gameOver = true;
+            alert("YOU LOSE!")
+        }
         reset();
+        
     };
     if (
         girl.x <= (crab4.x + 45)
@@ -175,7 +209,13 @@ let update = function (modifier) {
         && girl.y <= (crab4.y + 45)
         && crab4.y <= (girl.y + 45)
     ) {
+        soundEffectsCa.src = soundCaught;
+        soundEffectsCa.play(); 
         -- caughtbyaCrab;
+        if(caughtbyaCrab == 0){
+            gameOver = true;
+            alert("YOU LOSE!")
+        }
         reset();
     };
 
@@ -253,5 +293,3 @@ let reset = function (){
 let then = Date.now();
 reset();
 main(); // To call the main game loop//
-
-
