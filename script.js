@@ -5,6 +5,27 @@ canvas.width = 1000;
 canvas.height = 1000;
 document.getElementById("game").appendChild(canvas);
 
+let chessboard = [
+    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e']
+];
+
 //*********Sound that the game need*********//
 let soundCaught = "sounds/caught.wav";
 let soundCollected = "sounds/pearlcollected.wav";
@@ -133,7 +154,32 @@ let pearl = {
     y:0
 };
 
-let palmTree = {
+let palmTree1 = {
+    x:0,
+    y:0
+};
+
+let palmTree2 = {
+    x:0,
+    y:0
+};
+
+let palmTree3 = {
+    x:0,
+    y:0
+};
+
+let palmTree4 = {
+    x:0,
+    y:0
+};
+
+let palmTree5 = {
+    x:0,
+    y:0
+};
+
+let palmTree6 = {
     x:0,
     y:0
 };
@@ -174,8 +220,7 @@ let update = function (modifier) {
         && pearl.x <= (girl.x + 32)
         && girl.y <= (pearl.y + 32)
         && pearl.y <= (girl.y + 32)
-    ) {
-        
+    ) { 
         ++ pearlCollected;
         shouldRunUpdate = false;
         if (pearlCollected > 4) {
@@ -185,7 +230,6 @@ let update = function (modifier) {
         } else {
             soundEffectsC.play();
         }
-        
     };
 
     if (
@@ -221,8 +265,7 @@ let update = function (modifier) {
             soundEffectLose.play();
         } else {
             soundEffectsCa.play(); 
-        }
-        
+        } 
     };
     if (
         girl.x <= (crab3.x + 45)
@@ -238,9 +281,7 @@ let update = function (modifier) {
             soundEffectLose.play();
         } else {
             soundEffectsCa.play(); 
-        }
-        
-        
+        } 
     };
     if (
         girl.x <= (crab4.x + 45)
@@ -257,8 +298,7 @@ let update = function (modifier) {
             soundEffectLose.play();
         } else {
             soundEffectsCa.play(); 
-        }
-        
+        } 
     };
 
 }
@@ -302,7 +342,12 @@ let render = function(){
         ctx.drawImage(crabImg,crab4.x,crab4.y);
     }
     if (palmTreeReady) {
-        ctx.drawImage(palmTreeImg, palmTree.x,palmTree.y)
+        ctx.drawImage(palmTreeImg, palmTree1.x,palmTree1.y);
+        ctx.drawImage(palmTreeImg, palmTree2.x,palmTree2.y);
+        ctx.drawImage(palmTreeImg, palmTree3.x,palmTree3.y);
+        ctx.drawImage(palmTreeImg, palmTree4.x,palmTree4.y);
+        ctx.drawImage(palmTreeImg, palmTree5.x,palmTree5.y);
+        ctx.drawImage(palmTreeImg, palmTree6.x,palmTree6.y);
     }
 //score//
 
@@ -330,8 +375,18 @@ let reset = function (){
     pearl.x= 64 + (Math.random() * (canvas.width - 192));
     pearl.y =64 + (Math.random() * (canvas.height - 192));
 
-    palmTree.x = 64 + (Math.random() * (canvas.width -192));
-    palmTree.y = 64 + (Math.random() * (canvas.height -192));
+    palmTree1.x = 64 + (Math.random() * (canvas.width -192));
+    palmTree1.y = 64 + (Math.random() * (canvas.height -192));
+    palmTree2.x = 64 + (Math.random() * (canvas.width -192));
+    palmTree2.y = 64 + (Math.random() * (canvas.height -192));
+    palmTree3.x = 64 + (Math.random() * (canvas.width -192));
+    palmTree3.y = 64 + (Math.random() * (canvas.height -192));
+    palmTree4.x = 64 + (Math.random() * (canvas.width -192));
+    palmTree4.y = 64 + (Math.random() * (canvas.height -192));
+    palmTree5.x = 64 + (Math.random() * (canvas.width -192));
+    palmTree5.y = 64 + (Math.random() * (canvas.height -192));
+    palmTree6.x = 64 + (Math.random() * (canvas.width -192));
+    palmTree6.y = 64 + (Math.random() * (canvas.height -192));
 
     shouldRunUpdate = true;
 }
