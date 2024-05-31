@@ -8,10 +8,38 @@ document.getElementById("game").appendChild(canvas);
 //*********Sound that the game need*********//
 let soundCaught = "sounds/caught.wav";
 let soundCollected = "sounds/pearlcollected.wav";
-// let soundYouWin = "sounds/youwin.wav";
-// let soundYouLose = "sounds/youlose.wav";
+let soundWin = "sounds/youwin.wav";
+let soundLose = "sounds/youlose.wav";
 let soundEffectsC = document.getElementById("soundEffectsC");
 let soundEffectsCa = document.getElementById("soundEffectsCa");
+let soundEffectLose = document.getElementById("youLose");
+let soundEffectWin = document.getElementById("youWin");
+soundEffectsC.src = soundCollected;
+soundEffectsCa.src = soundCaught;
+soundEffectLose.src = soundLose;
+soundEffectWin.src = soundWin;
+
+soundEffectsCa.addEventListener("ended", function(){
+    reset();
+});
+
+soundEffectsC.addEventListener("ended", function(){
+    reset(); 
+});
+
+soundEffectLose.addEventListener("ended", function(){
+    alert("YOU LOSE!")
+    resetScores();
+    reset();
+});
+
+soundEffectWin.addEventListener("ended", function(){
+    alert("YOU WIN!")
+    resetScores();
+    reset();
+});
+
+let shouldRunUpdate = true;
 
 //Images that the game need//
 
@@ -147,14 +175,17 @@ let update = function (modifier) {
         && girl.y <= (pearl.y + 32)
         && pearl.y <= (girl.y + 32)
     ) {
-        soundEffectsC.src = soundCollected;
-        soundEffectsC.play();
+        
         ++ pearlCollected;
-        if (pearlCollected == 5) {
+        shouldRunUpdate = false;
+        if (pearlCollected > 4) {
             gameOver = true;
-            alert("YOU WON!");
+            
+            soundEffectWin.play();
+        } else {
+            soundEffectsC.play();
         }
-        reset(); 
+        
     };
 
     if (
@@ -163,14 +194,17 @@ let update = function (modifier) {
         && girl.y <= (crab1.y + 45)
         && crab1.y <= (girl.y + 45)
     ) {
-        soundEffectsCa.src = soundCaught;
-        soundEffectsCa.play(); 
+        
         -- caughtbyaCrab;
-        if(caughtbyaCrab == 5){
+        shouldRunUpdate = false;
+        if(caughtbyaCrab < 1){
             gameOver = true;
-            alert("YOU LOSE!")
+            
+            soundEffectLose.play();
+        } else {
+            soundEffectsCa.play(); 
         }
-        reset();
+        
     };
     if (
         girl.x <= (crab2.x + 45)
@@ -178,14 +212,17 @@ let update = function (modifier) {
         && girl.y <= (crab2.y + 45)
         && crab2.y <= (girl.y + 45)
     ) {
-        soundEffectsCa.src = soundCaught;
-        soundEffectsCa.play(); 
+        
         -- caughtbyaCrab;
-        if(caughtbyaCrab == 5){
+        shouldRunUpdate = false;
+        if(caughtbyaCrab < 1){
             gameOver = true;
-            alert("YOU LOSE!")
+            
+            soundEffectLose.play();
+        } else {
+            soundEffectsCa.play(); 
         }
-        reset();
+        
     };
     if (
         girl.x <= (crab3.x + 45)
@@ -193,14 +230,16 @@ let update = function (modifier) {
         && girl.y <= (crab3.y + 45)
         && crab3.y <= (girl.y + 45)
     ) {
-        soundEffectsCa.src = soundCaught;
-        soundEffectsCa.play(); 
         -- caughtbyaCrab;
-        if(caughtbyaCrab == 5){
+        shouldRunUpdate = false;
+        if(caughtbyaCrab < 1){
             gameOver = true;
-            alert("YOU LOSE!")
+            
+            soundEffectLose.play();
+        } else {
+            soundEffectsCa.play(); 
         }
-        reset();
+        
         
     };
     if (
@@ -209,14 +248,17 @@ let update = function (modifier) {
         && girl.y <= (crab4.y + 45)
         && crab4.y <= (girl.y + 45)
     ) {
-        soundEffectsCa.src = soundCaught;
-        soundEffectsCa.play(); 
+        
         -- caughtbyaCrab;
-        if(caughtbyaCrab == 0){
+        shouldRunUpdate = false;
+        if(caughtbyaCrab < 1){
             gameOver = true;
-            alert("YOU LOSE!")
+            
+            soundEffectLose.play();
+        } else {
+            soundEffectsCa.play(); 
         }
-        reset();
+        
     };
 
 }
@@ -225,8 +267,11 @@ let update = function (modifier) {
 let main = function() {
     let now = Date.now();
     let delta = now - then;
-    update(delta / 1000);
-    render ();
+    if (shouldRunUpdate){
+        update(delta / 1000);
+        render ();
+    }
+    
     then = now;
     requestAnimationFrame(main);
 };
@@ -261,9 +306,9 @@ let render = function(){
     }
 //score//
 
-document.getElementById("counting").innerHTML = pearlCollected;
+    document.getElementById("counting").innerHTML = pearlCollected;
 
-document.getElementById("livesleft").innerHTML = caughtbyaCrab;
+    document.getElementById("livesleft").innerHTML = caughtbyaCrab;
 };
 
 
@@ -287,9 +332,21 @@ let reset = function (){
 
     palmTree.x = 64 + (Math.random() * (canvas.width -192));
     palmTree.y = 64 + (Math.random() * (canvas.height -192));
+
+    shouldRunUpdate = true;
 }
 
 //**********To play the Game*********//
 let then = Date.now();
 reset();
 main(); // To call the main game loop//
+
+
+// Reset scores//
+let resetScores = function() {
+    caughtbyaCrab = 5;
+    pearlCollected = 0;
+
+    document.getElementById("counting").innerHTML = 0;
+    document.getElementById("livesleft").innerHTML = 5;
+}
