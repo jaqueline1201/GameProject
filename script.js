@@ -5,6 +5,23 @@ canvas.width = 1000;
 canvas.height = 1000;
 document.getElementById("game").appendChild(canvas);
 
+
+let previousGirlX;
+let previousGirlY;
+
+let map = [
+    ['e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e'],
+    ['e','e','e','e','e','e','e','e','e']
+];
+
+let gameOver = false;
 //Sprite Sheet section//
 let rows = 4;
 let columns = 4;
@@ -13,7 +30,7 @@ let trackingRight = 2;
 //Left movement//
 let trackingLeft = 1;
 //Going up//
-let trackingUp = 4;
+let trackingUp = 3;
 //Going down//
 let trackingDown = 0;
 
@@ -204,6 +221,9 @@ addEventListener("keyup", function (e){
 //*********Update Game Objects**********//
 let update = function (modifier) {
 
+    previousGirlX = girl.x;
+    previousGirlY = girl.y;
+
     left = false;
     right = false;
     down = false;
@@ -212,18 +232,25 @@ let update = function (modifier) {
     if (37 in keysDown && girl.x > (64 + 4)) {
         girl.x -= girl.speed * modifier;
         left =  true;
+        console.log("left")
     }
     if (39 in keysDown && girl.x < canvas. width - (128 + 6)) {
         girl.x += girl.speed * modifier;
         right = true;
+        console.log("right")
     }
-    if (38 in keysDown && girl.x > (64 + 4)) {
+    if (38 in keysDown && girl.y > (64 + 4)) {
         girl.y -= girl.speed * modifier;
         up = true;
+        console.log("up")
     }
-    if (40 in keysDown && girl.x < canvas.height - (128 + 6)) {
+    if (40 in keysDown && girl.y < canvas.height - (128 + 6)) {
         girl.y += girl.speed * modifier;
         down = true;
+        console.log("down")
+        console.log("x",girl.x)
+        console.log("height",canvas.height)
+        console.log("limit",canvas.height - (128 + 6))
     }
 
 //*********Girl collected a pearl//Girl caught by a crab**********//  
@@ -313,7 +340,42 @@ let update = function (modifier) {
             soundEffectsCa.play(); 
         } 
     };
-
+    if (
+        girl.x <= (palmTree1.x + 45)
+        && palmTree1.x <= (girl.x + 45)
+        && girl.y <= (palmTree1.y + 60)
+        && palmTree1.y <= (girl.y + 60)
+    ) {
+        girl.x = previousGirlX;
+        girl.y = previousGirlY;
+    }
+    if (
+        girl.x <= (palmTree2.x + 45)
+        && palmTree2.x <= (girl.x + 45)
+        && girl.y <= (palmTree2.y + 60)
+        && palmTree2.y <= (girl.y + 60)
+    ) {
+        girl.x = previousGirlX;
+        girl.y = previousGirlY;
+    }
+    if (
+        girl.x <= (palmTree3.x + 45)
+        && palmTree3.x <= (girl.x + 45)
+        && girl.y <= (palmTree3.y + 60)
+        && palmTree3.y <= (girl.y + 60)
+    ) {
+        girl.x = previousGirlX;
+        girl.y = previousGirlY;
+    }
+    if (
+        girl.x <= (palmTree4.x + 45)
+        && palmTree4.x <= (girl.x + 45)
+        && girl.y <= (palmTree4.y + 60)
+        && palmTree4.y <= (girl.y + 60)
+    ) {
+        girl.x = previousGirlX;
+        girl.y = previousGirlY;
+    }
     countFrames = ++countFrames % frameCount;
     srcX = countFrames * girlWidth;
     
@@ -329,7 +391,7 @@ let update = function (modifier) {
         srcY = trackingDown * girlHeight;
     }
 
-    if(up){
+    if(up) {
         srcY = trackingUp * girlHeight;
     }
 
@@ -396,32 +458,64 @@ let render = function(){
 
 //**********Reset the Game**********//
 let reset = function (){
-    girl.x = (canvas.width/2)-32;
-    girl.y = (canvas.height/2)-32;
 
-    crab1.x= 64 + (Math.random() * (canvas.width - 192));
-    crab1.y =64 + (Math.random() * (canvas.height - 192));
-    crab2.x= 64 + (Math.random() * (canvas.width - 192));
-    crab2.y =64 + (Math.random() * (canvas.height - 192));
-    crab3.x= 64 + (Math.random() * (canvas.width - 192));
-    crab3.y =64 + (Math.random() * (canvas.height - 192));
-    crab4.x= 64 + (Math.random() * (canvas.width - 192));
-    crab4.y =64 + (Math.random() * (canvas.height - 192));
+        girl.x = (canvas.width/2)-32;
+        girl.y = (canvas.height/2)-32;
 
-    pearl.x= 64 + (Math.random() * (canvas.width - 192));
-    pearl.y =64 + (Math.random() * (canvas.height - 192));
+        placeItem(girl);
+        placeItem(pearl);
+        placeItem(crab1);
+        placeItem(crab2);
+        placeItem(crab3);
+        placeItem(crab4);
+        placeItem(palmTree1);
+        placeItem(palmTree2);
+        placeItem(palmTree3);
+        placeItem(palmTree4);
 
-    palmTree1.x = 64 + (Math.random() * (canvas.width -192));
-    palmTree1.y = 64 + (Math.random() * (canvas.height -192));
-    palmTree2.x = 64 + (Math.random() * (canvas.width -192));
-    palmTree2.y = 64 + (Math.random() * (canvas.height -192));
-    palmTree3.x = 64 + (Math.random() * (canvas.width -192));
-    palmTree3.y = 64 + (Math.random() * (canvas.height -192));
-    palmTree4.x = 64 + (Math.random() * (canvas.width -192));
-    palmTree4.y = 64 + (Math.random() * (canvas.height -192));
+        shouldRunUpdate = true;
+    
+    // crab1.x= 64 + (Math.random() * (canvas.width - 192));
+    // crab1.y =64 + (Math.random() * (canvas.height - 192));
+    // crab2.x= 64 + (Math.random() * (canvas.width - 192));
+    // crab2.y =64 + (Math.random() * (canvas.height - 192));
+    // crab3.x= 64 + (Math.random() * (canvas.width - 192));
+    // crab3.y =64 + (Math.random() * (canvas.height - 192));
+    // crab4.x= 64 + (Math.random() * (canvas.width - 192));
+    // crab4.y =64 + (Math.random() * (canvas.height - 192));
 
-    shouldRunUpdate = true;
+    // pearl.x= 64 + (Math.random() * (canvas.width - 192));
+    // pearl.y =64 + (Math.random() * (canvas.height - 192));
+
+    // palmTree1.x = 64 + (Math.random() * (canvas.width -192));
+    // palmTree1.y = 64 + (Math.random() * (canvas.height -192));
+    // palmTree2.x = 64 + (Math.random() * (canvas.width -192));
+    // palmTree2.y = 64 + (Math.random() * (canvas.height -192));
+    // palmTree3.x = 64 + (Math.random() * (canvas.width -192));
+    // palmTree3.y = 64 + (Math.random() * (canvas.height -192));
+    // palmTree4.x = 64 + (Math.random() * (canvas.width -192));
+    // palmTree4.y = 64 + (Math.random() * (canvas.height -192));
+
+    
 };
+
+let placeItem = function (character){
+
+    let X = 0;
+    let Y = 0;
+    let success = false;
+    while(!success){
+        X = Math.floor(Math.random( ) * 9);
+        Y = Math.floor(Math.random( ) * 9);
+        if(map[X][Y] === 'e') {
+            success = true;
+        }
+    }
+    map[X][Y] = 'o';
+    character.x = (X*100) + 64;
+    character.y = (Y*100) + 64
+
+}
 
 
 //**********To play the Game*********//
