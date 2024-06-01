@@ -147,6 +147,8 @@ let girl = {
     speed: 256, 
     x:0, 
     y:0,
+    width:64, 
+    height:64,
     edge: {
         x:9,
         y:9
@@ -391,22 +393,29 @@ let update = function (modifier) {
         left =  true;
         direction = "left";
     }
+
     if (39 in keysDown && girl.x < canvas. width - (128 + 6)) {
         girl.x += girl.speed * modifier;
         right = true;
         direction = "right";
     }
+
     if (38 in keysDown && girl.y > (64 + 4)) {
         girl.y -= girl.speed * modifier;
         up = true;
         direction = "up";
     }
+
     if (40 in keysDown && girl.y < canvas.height - (128 + 6)) {
         girl.y += girl.speed * modifier;
         down = true;
         direction = "down";
     }
-    checkPosition (palmTree1,girl,direction);
+
+    if (checkPosition(palmTree1,girl,direction)) {
+        girl.x = previousGirlX;
+        girl.y = previousGirlY;
+    }
 //*********Girl collected a pearl//Girl caught by a crab**********//  
     if (
         girl.x <= (pearl.x + 32)
@@ -494,86 +503,7 @@ let update = function (modifier) {
             soundEffectsCa.play(); 
         } 
     };
-    if (
-        girl.x <= (palmTree1.x + palmTree1.width)
-        && palmTree1.x <= (girl.x + girl.width)
-        && girl.y <= (palmTree1.y + palmTree1.height)
-        && palmTree1.y <= (girl.y + girl.height)
-    ) {
-        girl.x = previousGirlX;
-        girl.y = previousGirlY;
-        console.log("touch1")
-    }
-    if (
-        girl.x <= (palmTree2.x + palmTree2.width)
-        && palmTree2.x <= (girl.x + girl.width)
-        && girl.y <= (palmTree2.y + palmTree2.height)
-        && palmTree2.y <= (girl.y + girl.height)
-    ) {
-        girl.x = previousGirlX;
-        girl.y = previousGirlY;
-        console.log("touch2")
-    }
-    if (
-        girl.x <= (palmTree3.x + palmTree3.width)
-        && palmTree3.x <= (girl.x + girl.width)
-        && girl.y <= (palmTree3.y + palmTree3.height)
-        && palmTree3.y <= (girl.y + girl.height)
-    ) {
-        girl.x = previousGirlX;
-        girl.y = previousGirlY;
-        console.log("touch3")
-    }
-    if (
-        girl.x <= (palmTree4.x + palmTree4.width)
-        && palmTree4.x <= (girl.x + girl.width)
-        && girl.y <= (palmTree4.y + palmTree4.height)
-        && palmTree4.y <= (girl.y + girl.height)
-    ) {
-        girl.x = previousGirlX;
-        girl.y = previousGirlY;
-        console.log("touch4")
-    }
-    if (
-        girl.x <= (palmTree5.x + palmTree5.width)
-        && palmTree5.x <= (girl.x + girl.width)
-        && girl.y <= (palmTree5.y + palmTree5.height)
-        && palmTree5.y <= (girl.y + girl.height)
-    ) {
-        girl.x = previousGirlX;
-        girl.y = previousGirlY;
-        console.log("touch5")
-    }
-    if (
-        girl.x <= (palmTree6.x + palmTree6.width)
-        && palmTree6.x <= (girl.x + girl.width)
-        && girl.y <= (palmTree6.y + palmTree6.height)
-        && palmTree6.y <= (girl.y + girl.height)
-    ) {
-        girl.x = previousGirlX;
-        girl.y = previousGirlY;
-        console.log("touch6")
-    }
-    if (
-        girl.x <= (palmTree7.x + palmTree7.width)
-        && palmTree7.x <= (girl.x + girl.width)
-        && girl.y <= (palmTree7.y + palmTree7.height)
-        && palmTree7.y <= (girl.y + girl.height)
-    ) {
-        girl.x = previousGirlX;
-        girl.y = previousGirlY;
-        console.log("touch7")
-    }
-    if (
-        girl.x <= (palmTree8.x + palmTree8.width)
-        && palmTree8.x <= (girl.x + girl.width)
-        && girl.y <= (palmTree8.y + palmTree8.height)
-        && palmTree8.y <= (girl.y + girl.height)
-    ) {
-        girl.x = previousGirlX;
-        girl.y = previousGirlY;
-        console.log("touch8")
-    }
+  
     countFrames = ++countFrames % frameCount;
     srcX = countFrames * girlWidth;
     
@@ -733,8 +663,6 @@ let placeItem = function (character){
 
 //Check item//
 let checkPosition = function(character, girl, direction){
-    
-    console.log("direction",direction)
 
     //necesito checar  girl con respecto a la posicion de character
     //posicion de inicio character
@@ -768,8 +696,24 @@ let checkPosition = function(character, girl, direction){
             y: girl.y + girl.height
         }
     }
+
     if(direction === "right"){
-        girlPosition.final.x && characterPosition.initial.x
+       let touchingX = 
+            girlPosition.final.x >= characterPosition.initial.x;
+       let touchingY = 
+            (girlPosition.initial.y <= characterPosition.final.y && girlPosition.initial.y >= characterPosition.initial.y) || 
+            (girlPosition.final.y <= characterPosition.final.y &&
+            girlPosition.final.y >= characterPosition.initial.y);
+
+        return touchingX && touchingY;
+    } 
+
+    if(direction === "left") {
+        let touchingX = 
+            girlPosition.initial.x <= characterPosition.final.x;
+        let touchingY = 
+            (girlPosition.initial.y <= characterPosition.final.y &&
+             girlPosition.initial)
     }
 }
 
