@@ -696,25 +696,51 @@ let checkPosition = function(character, girl, direction){
             y: girl.y + girl.height
         }
     }
+    let rangeY = 
+        (girlPosition.initial.y <= characterPosition.final.y && girlPosition.initial.y >= characterPosition.initial.y) || 
+        (girlPosition.final.y <= characterPosition.final.y &&
+        girlPosition.final.y >= characterPosition.initial.y);
+
+    let rangeX = 
+        (girlPosition.initial.x <= characterPosition.final.x &&
+        girlPosition.initial.x >= characterPosition.initial.x) ||
+        (girlPosition.final.x >= characterPosition.final.x &&
+        girlPosition.initial.x <= characterPosition.initial.x);
 
     if(direction === "right"){
        let touchingX = 
-            girlPosition.final.x >= characterPosition.initial.x;
-       let touchingY = 
-            (girlPosition.initial.y <= characterPosition.final.y && girlPosition.initial.y >= characterPosition.initial.y) || 
-            (girlPosition.final.y <= characterPosition.final.y &&
-            girlPosition.final.y >= characterPosition.initial.y);
+            girlPosition.final.x >= characterPosition.initial.x &&
+            girlPosition.initial.x <= characterPosition.final.x; 
+            
 
-        return touchingX && touchingY;
+        return touchingX && rangeY;
     } 
 
     if(direction === "left") {
         let touchingX = 
-            girlPosition.initial.x <= characterPosition.final.x;
-        let touchingY = 
-            (girlPosition.initial.y <= characterPosition.final.y &&
-             girlPosition.initial)
+            girlPosition.initial.x <= characterPosition.final.x &&
+            girlPosition.final.x >= characterPosition.initial.x;
+        
+        return touchingX && rangeY;
     }
+    
+    if(direction ==="up") {
+        let touchingY =
+            girlPosition.initial.y <= characterPosition.final.y &&
+            girlPosition.final.y >= characterPosition.initial.y;
+
+        return touchingY && rangeX;
+    }
+
+    if(direction === "down") {
+        let touchingY =
+        girlPosition.initial.y <= characterPosition.final.y &&
+        girlPosition.final.y >= characterPosition.initial.y;
+
+        return touchingY && rangeX;
+    }
+
+
 }
 
 //**********To play the Game*********//
