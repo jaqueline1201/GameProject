@@ -244,8 +244,8 @@ let pearl = {
 let palmTree1 = {
     x:1,
     y:8,
-    width: 130,
-    height: 150,
+    width: 100,
+    height: 130,
     edge: {
         x:7,
         y:7
@@ -384,24 +384,29 @@ let update = function (modifier) {
     right = false;
     down = false;
     up = false;
+    let direction = "";
     
     if (37 in keysDown && girl.x > (64 + 4)) {
         girl.x -= girl.speed * modifier;
         left =  true;
+        direction = "left";
     }
     if (39 in keysDown && girl.x < canvas. width - (128 + 6)) {
         girl.x += girl.speed * modifier;
         right = true;
+        direction = "right";
     }
     if (38 in keysDown && girl.y > (64 + 4)) {
         girl.y -= girl.speed * modifier;
         up = true;
+        direction = "up";
     }
     if (40 in keysDown && girl.y < canvas.height - (128 + 6)) {
         girl.y += girl.speed * modifier;
         down = true;
+        direction = "down";
     }
-
+    checkPosition (palmTree1,girl,direction);
 //*********Girl collected a pearl//Girl caught by a crab**********//  
     if (
         girl.x <= (pearl.x + 32)
@@ -490,80 +495,80 @@ let update = function (modifier) {
         } 
     };
     if (
-        girl.x <= (palmTree1.x + 40)
-        && palmTree1.x <= (girl.x + 40)
-        && girl.y <= (palmTree1.y + 80)
-        && palmTree1.y <= (girl.y + 80)
+        girl.x <= (palmTree1.x + palmTree1.width)
+        && palmTree1.x <= (girl.x + girl.width)
+        && girl.y <= (palmTree1.y + palmTree1.height)
+        && palmTree1.y <= (girl.y + girl.height)
     ) {
         girl.x = previousGirlX;
         girl.y = previousGirlY;
         console.log("touch1")
     }
     if (
-        girl.x <= (palmTree2.x + 40)
-        && palmTree2.x <= (girl.x + 40)
-        && girl.y <= (palmTree2.y + 80)
-        && palmTree2.y <= (girl.y + 80)
+        girl.x <= (palmTree2.x + palmTree2.width)
+        && palmTree2.x <= (girl.x + girl.width)
+        && girl.y <= (palmTree2.y + palmTree2.height)
+        && palmTree2.y <= (girl.y + girl.height)
     ) {
         girl.x = previousGirlX;
         girl.y = previousGirlY;
         console.log("touch2")
     }
     if (
-        girl.x <= (palmTree3.x + 40)
-        && palmTree3.x <= (girl.x + 40)
-        && girl.y <= (palmTree3.y + 80)
-        && palmTree3.y <= (girl.y + 80)
+        girl.x <= (palmTree3.x + palmTree3.width)
+        && palmTree3.x <= (girl.x + girl.width)
+        && girl.y <= (palmTree3.y + palmTree3.height)
+        && palmTree3.y <= (girl.y + girl.height)
     ) {
         girl.x = previousGirlX;
         girl.y = previousGirlY;
         console.log("touch3")
     }
     if (
-        girl.x <= (palmTree4.x + 40)
-        && palmTree4.x <= (girl.x + 40)
-        && girl.y <= (palmTree4.y + 80)
-        && palmTree4.y <= (girl.y + 80)
+        girl.x <= (palmTree4.x + palmTree4.width)
+        && palmTree4.x <= (girl.x + girl.width)
+        && girl.y <= (palmTree4.y + palmTree4.height)
+        && palmTree4.y <= (girl.y + girl.height)
     ) {
         girl.x = previousGirlX;
         girl.y = previousGirlY;
         console.log("touch4")
     }
     if (
-        girl.x <= (palmTree5.x + 40)
-        && palmTree5.x <= (girl.x + 40)
-        && girl.y <= (palmTree5.y + 80)
-        && palmTree5.y <= (girl.y + 80)
+        girl.x <= (palmTree5.x + palmTree5.width)
+        && palmTree5.x <= (girl.x + girl.width)
+        && girl.y <= (palmTree5.y + palmTree5.height)
+        && palmTree5.y <= (girl.y + girl.height)
     ) {
         girl.x = previousGirlX;
         girl.y = previousGirlY;
         console.log("touch5")
     }
     if (
-        girl.x <= (palmTree6.x + 40)
-        && palmTree6.x <= (girl.x + 40)
-        && girl.y <= (palmTree6.y + 80)
-        && palmTree6.y <= (girl.y + 80)
+        girl.x <= (palmTree6.x + palmTree6.width)
+        && palmTree6.x <= (girl.x + girl.width)
+        && girl.y <= (palmTree6.y + palmTree6.height)
+        && palmTree6.y <= (girl.y + girl.height)
     ) {
         girl.x = previousGirlX;
         girl.y = previousGirlY;
         console.log("touch6")
     }
     if (
-        girl.x <= (palmTree7.x + 40)
-        && palmTree7.x <= (girl.x + 40)
-        && girl.y <= (palmTree7.y + 80)
-        && palmTree7.y <= (girl.y + 80)
+        girl.x <= (palmTree7.x + palmTree7.width)
+        && palmTree7.x <= (girl.x + girl.width)
+        && girl.y <= (palmTree7.y + palmTree7.height)
+        && palmTree7.y <= (girl.y + girl.height)
     ) {
         girl.x = previousGirlX;
         girl.y = previousGirlY;
         console.log("touch7")
     }
     if (
-        girl.x <= (palmTree8.x + 40)
-        && palmTree8.x <= (girl.x + 40)
-        && girl.y <= (palmTree8.y + 80)
-        && palmTree8.y <= (girl.y + 80)
+        girl.x <= (palmTree8.x + palmTree8.width)
+        && palmTree8.x <= (girl.x + girl.width)
+        && girl.y <= (palmTree8.y + palmTree8.height)
+        && palmTree8.y <= (girl.y + girl.height)
     ) {
         girl.x = previousGirlX;
         girl.y = previousGirlY;
@@ -636,13 +641,13 @@ let render = function(){
     }
     if (palmTreeReady) {
         ctx.drawImage(palmTreeImg, palmTree1.x,palmTree1.y);
-        ctx.drawImage(palmTreeImg, palmTree2.x,palmTree2.y);
-        ctx.drawImage(palmTreeImg, palmTree3.x,palmTree3.y);
-        ctx.drawImage(palmTreeImg, palmTree4.x,palmTree4.y);
-        ctx.drawImage(palmTreeImg, palmTree5.x,palmTree4.y);
-        ctx.drawImage(palmTreeImg, palmTree6.x,palmTree4.y);
-        ctx.drawImage(palmTreeImg, palmTree7.x,palmTree4.y);
-        ctx.drawImage(palmTreeImg, palmTree8.x,palmTree4.y);
+        // ctx.drawImage(palmTreeImg, palmTree2.x,palmTree2.y);
+        // ctx.drawImage(palmTreeImg, palmTree3.x,palmTree3.y);
+        // ctx.drawImage(palmTreeImg, palmTree4.x,palmTree4.y);
+        // ctx.drawImage(palmTreeImg, palmTree5.x,palmTree4.y);
+        // ctx.drawImage(palmTreeImg, palmTree6.x,palmTree4.y);
+        // ctx.drawImage(palmTreeImg, palmTree7.x,palmTree4.y);
+        // ctx.drawImage(palmTreeImg, palmTree8.x,palmTree4.y);
     }
 
 //score//
@@ -651,8 +656,6 @@ let render = function(){
 
     document.getElementById("livesleft").innerHTML = caughtbyaCrab;
 };
-
-
 
 //**********Reset the Game**********//
 let reset = function (){
@@ -728,6 +731,47 @@ let placeItem = function (character){
 
 }
 
+//Check item//
+let checkPosition = function(character, girl, direction){
+    
+    console.log("direction",direction)
+
+    //necesito checar  girl con respecto a la posicion de character
+    //posicion de inicio character
+    //posicion de inicio girl 
+    //width y height de cada character
+    //posicion de inicio + width posicion final del character
+    //posicion de inicio + height posicion final del character
+    //a la derecha; posicion x final de girl y posicion incial de character.
+    // a la izquierda; posicion x inicial de girl y posicion final de character.
+    //arriba, posicion y final de girl, inicial de character,
+    //abajo, posicion y inicial de girl, final de character
+
+    let characterPosition = {
+        initial: {
+            x: character.x,
+            y: character.y
+        },
+        final: {
+            x: character.x + character.width,
+            y: character.y + character.height
+        }
+    }
+
+    let girlPosition = {
+        initial: {
+            x: girl.x,
+            y: girl.y
+        },
+        final: {
+            x: girl.x + girl.width,
+            y: girl.y + girl.height
+        }
+    }
+    if(direction === "right"){
+        girlPosition.final.x && characterPosition.initial.x
+    }
+}
 
 //**********To play the Game*********//
 let then = Date.now();
