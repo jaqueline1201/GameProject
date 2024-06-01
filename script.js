@@ -5,26 +5,34 @@ canvas.width = 1000;
 canvas.height = 1000;
 document.getElementById("game").appendChild(canvas);
 
-let chessboard = [
-    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
-    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
-    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
-    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
-    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
-    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
-    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
-    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
-    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
-    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
-    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
-    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
-    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
-    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
-    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
-    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
-    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'],
-    ['e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e']
-];
+//Sprite Sheet section//
+let rows = 4;
+let columns = 4;
+// Right movement//
+let trackingRight = 2;
+//Left movement//
+let trackingLeft = 1;
+//Going up//
+let trackingUp = 4;
+//Going down//
+let trackingDown = 0;
+
+let spriteWidth = 256;
+let spriteHeight = 256;
+
+let girlWidth = spriteWidth / columns;
+let girlHeight = spriteHeight / rows;
+
+let countFrames = 0;
+let frameCount = 4;
+
+let srcX = 0;
+let srcY = 0;
+
+let left = false;
+let right = false;
+let down = false;
+let up = false;
 
 //*********Sound that the game need*********//
 let soundCaught = "sounds/caught.wav";
@@ -49,13 +57,13 @@ soundEffectsC.addEventListener("ended", function(){
 });
 
 soundEffectLose.addEventListener("ended", function(){
-    alert("YOU LOSE!")
+    alert("YOU LOSE! You were caught by a pirate crab!")
     resetScores();
     reset();
 });
 
 soundEffectWin.addEventListener("ended", function(){
-    alert("YOU WIN!")
+    alert("YOU WIN! You collected all the pearls!")
     resetScores();
     reset();
 });
@@ -118,15 +126,18 @@ palmTreeImg.src="images/palmTree.gif";
 
 //**********Game Objects**********//
 let girl = {
-    swidth:64,
-    sheight:64,
-    speed: 256,
-    x:0,
-    y:0,
-    sx:0,
-    sy:0, 
-    width:64,
-    height:64
+    speed: 256, 
+    x:0, 
+    y:0
+    // girlWidth:64,
+    // girlHeight:64,
+    // speed: 256,
+    // x:0,
+    // y:0,
+    // srcX:0,
+    // srcY:0, 
+    // width:64,
+    // height:64
 };
 
 let crab1 = {
@@ -174,15 +185,6 @@ let palmTree4 = {
     y:0
 };
 
-let palmTree5 = {
-    x:0,
-    y:0
-};
-
-let palmTree6 = {
-    x:0,
-    y:0
-};
 
 let pearlCollected = 0; 
 
@@ -201,17 +203,27 @@ addEventListener("keyup", function (e){
 
 //*********Update Game Objects**********//
 let update = function (modifier) {
-    if (38 in keysDown && girl.y > 64 + 4) {
-        girl.y -= girl.speed * modifier;
-    }
-    if (40 in keysDown && girl.y < canvas.height - (128 + 6)) {
-        girl.y += girl.speed * modifier;
-    }
+
+    left = false;
+    right = false;
+    down = false;
+    up = false;
+    
     if (37 in keysDown && girl.x > (64 + 4)) {
         girl.x -= girl.speed * modifier;
+        left =  true;
     }
     if (39 in keysDown && girl.x < canvas. width - (128 + 6)) {
         girl.x += girl.speed * modifier;
+        right = true;
+    }
+    if (38 in keysDown && girl.x > (64 + 4)) {
+        girl.y -= girl.speed * modifier;
+        up = true;
+    }
+    if (40 in keysDown && girl.x < canvas.height - (128 + 6)) {
+        girl.y += girl.speed * modifier;
+        down = true;
     }
 
 //*********Girl collected a pearl//Girl caught by a crab**********//  
@@ -221,6 +233,7 @@ let update = function (modifier) {
         && girl.y <= (pearl.y + 32)
         && pearl.y <= (girl.y + 32)
     ) { 
+
         ++ pearlCollected;
         shouldRunUpdate = false;
         if (pearlCollected > 4) {
@@ -301,6 +314,31 @@ let update = function (modifier) {
         } 
     };
 
+    countFrames = ++countFrames % frameCount;
+    srcX = countFrames * girlWidth;
+    
+    if(left){
+        srcY = trackingLeft * girlHeight;
+    }
+    
+    if(right){
+        srcY = trackingRight * girlHeight;
+    }
+
+    if(down){
+        srcY = trackingDown * girlHeight;
+    }
+
+    if(up){
+        srcY = trackingUp * girlHeight;
+    }
+
+    if(left == false && right == false && up == false && down == false){
+        srcX = 0 * girlWidth;
+        srcY = 0 * girlHeight;
+    }
+
+
 }
 
 //**********The Main Game Loop**********//
@@ -330,7 +368,7 @@ let render = function(){
         ctx.drawImage(borderSideImg, (1000-64),0);
     }
     if (girlReady) {
-        ctx.drawImage(girlImg,girl.sx, girl.sy, girl.swidth, girl.sheight, girl.x, girl.y, girl.width, girl.height);
+        ctx.drawImage(girlImg, srcX, srcY, girlWidth, girlHeight, girl.x, girl.y, girlWidth, girlHeight);
     }
     if (pearlReady) {
         ctx.drawImage(pearlImg,pearl.x,pearl.y);
@@ -346,8 +384,6 @@ let render = function(){
         ctx.drawImage(palmTreeImg, palmTree2.x,palmTree2.y);
         ctx.drawImage(palmTreeImg, palmTree3.x,palmTree3.y);
         ctx.drawImage(palmTreeImg, palmTree4.x,palmTree4.y);
-        ctx.drawImage(palmTreeImg, palmTree5.x,palmTree5.y);
-        ctx.drawImage(palmTreeImg, palmTree6.x,palmTree6.y);
     }
 //score//
 
@@ -383,13 +419,10 @@ let reset = function (){
     palmTree3.y = 64 + (Math.random() * (canvas.height -192));
     palmTree4.x = 64 + (Math.random() * (canvas.width -192));
     palmTree4.y = 64 + (Math.random() * (canvas.height -192));
-    palmTree5.x = 64 + (Math.random() * (canvas.width -192));
-    palmTree5.y = 64 + (Math.random() * (canvas.height -192));
-    palmTree6.x = 64 + (Math.random() * (canvas.width -192));
-    palmTree6.y = 64 + (Math.random() * (canvas.height -192));
 
     shouldRunUpdate = true;
-}
+};
+
 
 //**********To play the Game*********//
 let then = Date.now();
