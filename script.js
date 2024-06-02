@@ -13,9 +13,9 @@ let map = [
     ['e','e','e','e','e','e','e','e','e'],
     ['e','e','e','e','e','e','e','e','e'],
     ['e','e','e','e','e','e','e','e','e'],
-    ['e','e','e','e','o','e','e','e','e'],
-    ['e','e','e','e','o','e','e','e','e'],
-    ['e','e','e','e','o','e','e','e','e'],
+    ['e','e','e','o','o','o','e','e','e'],
+    ['e','e','e','o','o','o','e','e','e'],
+    ['e','e','e','o','o','o','e','e','e'],
     ['e','e','e','e','e','e','e','e','e'],
     ['e','e','e','e','e','e','e','e','e'],
     ['e','e','e','e','e','e','e','e','e']
@@ -170,7 +170,7 @@ let crab1 = {
         y:9
     },
     space: {
-        x:2,
+        x:1,
         y:1
     }
 };
@@ -185,7 +185,7 @@ let crab2 = {
         y:9
     },
     space: {
-        x:2,
+        x:1,
         y:1
     }
 };
@@ -200,7 +200,7 @@ let crab3 = {
         y:9
     },
     space: {
-        x:2,
+        x:1,
         y:1
     }
 };
@@ -215,7 +215,7 @@ let crab4 = {
         y:9
     },
     space: {
-        x:2,
+        x:1,
         y:1
     }
 };
@@ -535,17 +535,28 @@ let reset = function (){
         girl.x = (canvas.width/2)-32;
         girl.y = (canvas.height/2)-32;
 
+        console.log("pearl")
         placeItem(pearl);
+        console.log("crab 1")
         placeItem(crab1);
+        console.log("crab 2")
         placeItem(crab2);
+        console.log("crab 3")
         placeItem(crab3);
+        console.log("crab 4")
         placeItem(crab4);
+        console.log("palm 1")
         placeItem(palmTree1);
+        console.log("palm 2")
         placeItem(palmTree2);
+        console.log("palm 3")
         placeItem(palmTree3);
+        console.log("palm 4")
         placeItem(palmTree4);
 
+        
         shouldRunUpdate = true;    
+    
 };
 
 let placeItem = function (character){
@@ -553,14 +564,17 @@ let placeItem = function (character){
     let X = 0;
     let Y = 0;
     let success = false;
-    while(!success){
+    let counter = 0;
+
+    while(!success && counter <5){
         X = Math.floor(Math.random( ) * 8);
         Y = Math.floor(Math.random( ) * 8);
         if(map[X][Y] === 'e' && character.edge.x >= X && character.edge.y >= Y) {
             success = true;
+        }else {
+            counter++;
         }
     }
-
 
     let coverXlimit = character.space.x + X - 1;
     let coverYlimit = character.space.y + Y -1;
@@ -612,21 +626,16 @@ let checkPosition = function(character, girl, direction){
        let touchingX = 
             girlPosition.final.x >= characterPosition.initial.x - 5;
         const inside = girlPosition.final.x >= characterPosition.initial.x;
-        console.log("inside", inside)
-        console.log("touchingx", touchingX)
-            
-            console.log("right")
-
+ 
         return touchingX && rangeY && !inside;
     } 
 
     if(direction === "left") {
         let touchingX = 
             girlPosition.initial.x <= characterPosition.final.x + 5;
-            console.log("left")
+            
         const inside = girlPosition.initial.x <= characterPosition.final.x;
-        console.log("inside", inside)
-        console.log("touchingx", touchingX)
+
         return touchingX && rangeY && !inside;
     }
     
@@ -635,24 +644,22 @@ let checkPosition = function(character, girl, direction){
             girlPosition.initial.y <= characterPosition.final.y + 5;
 
         const inside = girlPosition.final.y <= characterPosition.final.y;
-        console.log("inside",inside)
-            console.log("touching y",touchingY)
-            console.log("rangex",rangeX)
-            console.log("up")
+
         return touchingY && rangeX && !inside;
         
     }
 
     if(direction === "down") {
         let touchingY =
-        girlPosition.initial.y <= characterPosition.final.y + 5;
+        girlPosition.final.y <= characterPosition.initial.y;
 
-        const inside = girlPosition.initial.y <= characterPosition.initial.y;
-        console.log("down")
+        const inside = girlPosition.initial.y >= characterPosition.initial.y;
+        console.log("inside",inside)
+        console.log("touching y",touchingY)
+        console.log("rangex",rangeX)
+
         return touchingY && rangeX && !inside;
     }
-
-
 }
 
 //**********To play the Game*********//
