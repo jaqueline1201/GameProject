@@ -13,9 +13,9 @@ let map = [
     ['e','e','e','e','e','e','e','e','e'],
     ['e','e','e','e','e','e','e','e','e'],
     ['e','e','e','e','e','e','e','e','e'],
-    ['e','e','e','o','o','o','e','e','e'],
-    ['e','e','e','o','o','o','e','e','e'],
-    ['e','e','e','o','o','o','e','e','e'],
+    ['e','e','e','e','o','e','e','e','e'],
+    ['e','e','e','e','o','e','e','e','e'],
+    ['e','e','e','e','o','e','e','e','e'],
     ['e','e','e','e','e','e','e','e','e'],
     ['e','e','e','e','e','e','e','e','e'],
     ['e','e','e','e','e','e','e','e','e']
@@ -140,7 +140,7 @@ let palmTreeImg =  new Image();
 palmTreeImg.onload =  function (){
     palmTreeReady = true;
 };
-palmTreeImg.src="images/palmTreeB.png";
+palmTreeImg.src="images/palmTree.png";
 
 //**********Game Objects**********//
 let girl = {
@@ -238,15 +238,15 @@ let pearl = {
 let palmTree1 = {
     x:1,
     y:8,
-    width: 100,
-    height: 130,
+    width: 90,
+    height: 139,
     edge: {
         x:7,
         y:7
     },
     space: {
         x:2,
-        y:3
+        y:2
     }
     
 };
@@ -254,44 +254,44 @@ let palmTree1 = {
 let palmTree2 = {
     x:1,
     y:8,
-    width: 130,
-    height: 150,
+    width: 90,
+    height: 139,
     edge: {
         x:7,
         y:7
     },
     space: {
         x:2,
-        y:3
+        y:2
     }
 };
 
 let palmTree3 = {
     x:1,
     y:8,
-    width: 130,
-    height: 150,
+    width: 90,
+    height: 139,
     edge: {
         x:7,
         y:7
     },
     space: {
         x:2,
-        y:3
+        y:2
     }
 };
 let palmTree4 = {
     x:1,
     y:8,
-    width: 130,
-    height: 150,
+    width: 90,
+    height: 139,
     edge: {
         x:7,
         y:7
     },
     space: {
         x:2,
-        y:3
+        y:2
     }
 };
 
@@ -601,20 +601,17 @@ let checkPosition = function(character, girl, direction){
         }
     }
     let rangeY = 
-        (girlPosition.initial.y <= characterPosition.final.y && girlPosition.initial.y >= characterPosition.initial.y) || 
-        (girlPosition.final.y <= characterPosition.final.y &&
-        girlPosition.final.y >= characterPosition.initial.y);
+        (girlPosition.initial.y <= characterPosition.final.y && 
+        girlPosition.final.y >= characterPosition.initial.y)
 
     let rangeX = 
         (girlPosition.initial.x <= characterPosition.final.x &&
-        girlPosition.initial.x >= characterPosition.initial.x) ||
-        (girlPosition.final.x >= characterPosition.final.x &&
-        girlPosition.initial.x <= characterPosition.initial.x);
+        girlPosition.final.x >= characterPosition.initial.x)
 
     if(direction === "right"){
        let touchingX = 
             girlPosition.final.x >= characterPosition.initial.x &&
-            girlPosition.initial.x <= characterPosition.final.x; 
+            girlPosition.initial.x <= characterPosition.initial.x; 
             
 
         return touchingX && rangeY;
@@ -632,8 +629,10 @@ let checkPosition = function(character, girl, direction){
         let touchingY =
             girlPosition.initial.y <= characterPosition.final.y &&
             girlPosition.final.y >= characterPosition.initial.y;
-
+            console.log(touchingY)
+            console.log(rangeX)
         return touchingY && rangeX;
+        
     }
 
     if(direction === "down") {
