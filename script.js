@@ -613,6 +613,7 @@ let checkPosition = function(character, girl, direction){
             girlPosition.final.x >= characterPosition.initial.x &&
             girlPosition.initial.x <= characterPosition.initial.x; 
             
+            console.log("right")
 
         return touchingX && rangeY;
     } 
@@ -621,17 +622,21 @@ let checkPosition = function(character, girl, direction){
         let touchingX = 
             girlPosition.initial.x <= characterPosition.final.x &&
             girlPosition.final.x >= characterPosition.initial.x;
+            console.log("left")
         
         return touchingX && rangeY;
     }
     
     if(direction ==="up") {
         let touchingY =
-            girlPosition.initial.y <= characterPosition.final.y &&
-            girlPosition.final.y >= characterPosition.initial.y;
-            console.log(touchingY)
-            console.log(rangeX)
-        return touchingY && rangeX;
+            girlPosition.initial.y <= characterPosition.final.y + 10;
+
+        const inside = girlPosition.final.y <= characterPosition.final.y;
+        console.log("inside",inside)
+            console.log("touching y",touchingY)
+            console.log("rangex",rangeX)
+            console.log("up")
+        return touchingY && rangeX && !inside;
         
     }
 
@@ -640,6 +645,7 @@ let checkPosition = function(character, girl, direction){
         girlPosition.initial.y <= characterPosition.final.y &&
         girlPosition.final.y >= characterPosition.initial.y;
 
+        console.log("down")
         return touchingY && rangeX;
     }
 
