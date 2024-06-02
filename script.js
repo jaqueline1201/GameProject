@@ -610,26 +610,29 @@ let checkPosition = function(character, girl, direction){
 
     if(direction === "right"){
        let touchingX = 
-            girlPosition.final.x >= characterPosition.initial.x &&
-            girlPosition.initial.x <= characterPosition.initial.x; 
+            girlPosition.final.x >= characterPosition.initial.x - 5;
+        const inside = girlPosition.final.x >= characterPosition.initial.x;
+        console.log("inside", inside)
+        console.log("touchingx", touchingX)
             
             console.log("right")
 
-        return touchingX && rangeY;
+        return touchingX && rangeY && !inside;
     } 
 
     if(direction === "left") {
         let touchingX = 
-            girlPosition.initial.x <= characterPosition.final.x &&
-            girlPosition.final.x >= characterPosition.initial.x;
+            girlPosition.initial.x <= characterPosition.final.x + 5;
             console.log("left")
-        
-        return touchingX && rangeY;
+        const inside = girlPosition.initial.x <= characterPosition.final.x;
+        console.log("inside", inside)
+        console.log("touchingx", touchingX)
+        return touchingX && rangeY && !inside;
     }
     
     if(direction ==="up") {
         let touchingY =
-            girlPosition.initial.y <= characterPosition.final.y + 10;
+            girlPosition.initial.y <= characterPosition.final.y + 5;
 
         const inside = girlPosition.final.y <= characterPosition.final.y;
         console.log("inside",inside)
@@ -642,11 +645,11 @@ let checkPosition = function(character, girl, direction){
 
     if(direction === "down") {
         let touchingY =
-        girlPosition.initial.y <= characterPosition.final.y &&
-        girlPosition.final.y >= characterPosition.initial.y;
+        girlPosition.initial.y <= characterPosition.final.y + 5;
 
+        const inside = girlPosition.initial.y <= characterPosition.initial.y;
         console.log("down")
-        return touchingY && rangeX;
+        return touchingY && rangeX && !inside;
     }
 
 
