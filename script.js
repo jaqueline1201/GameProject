@@ -157,15 +157,7 @@ let girl = {
         x:1,
         y:1
     }
-    // girlWidth:64,
-    // girlHeight:64,
-    // speed: 256,
-    // x:0,
-    // y:0,
-    // srcX:0,
-    // srcY:0, 
-    // width:64,
-    // height:64
+
 };
 
 let crab1 = {
@@ -303,64 +295,6 @@ let palmTree4 = {
     }
 };
 
-let palmTree5 = {
-    x:1,
-    y:8,
-    width: 130,
-    height: 150,
-    edge: {
-        x:7,
-        y:7
-    },
-    space: {
-        x:2,
-        y:3
-    }
-};
-let palmTree6 = {
-    x:1,
-    y:8,
-    width: 130,
-    height: 150,
-    edge: {
-        x:7,
-        y:7
-    },
-    space: {
-        x:2,
-        y:3
-    }
-};
-let palmTree7 = {
-    x:1,
-    y:8,
-    width: 130,
-    height: 150,
-    edge: {
-        x:7,
-        y:7
-    },
-    space: {
-        x:2,
-        y:3
-    }
-};
-let palmTree8 = {
-    x:1,
-    y:8,
-    width: 130,
-    height: 150,
-    edge: {
-        x:7,
-        y:7
-    },
-    space: {
-        x:2,
-        y:3
-    }
-};
-
-
 let pearlCollected = 0; 
 
 let caughtbyaCrab = 5;
@@ -413,6 +347,18 @@ let update = function (modifier) {
     }
 
     if (checkPosition(palmTree1,girl,direction)) {
+        girl.x = previousGirlX;
+        girl.y = previousGirlY;
+    }
+    if (checkPosition(palmTree2,girl,direction)) {
+        girl.x = previousGirlX;
+        girl.y = previousGirlY;
+    }
+    if (checkPosition(palmTree3,girl,direction)) {
+        girl.x = previousGirlX;
+        girl.y = previousGirlY;
+    }
+    if (checkPosition(palmTree4,girl,direction)) {
         girl.x = previousGirlX;
         girl.y = previousGirlY;
     }
@@ -571,13 +517,9 @@ let render = function(){
     }
     if (palmTreeReady) {
         ctx.drawImage(palmTreeImg, palmTree1.x,palmTree1.y);
-        // ctx.drawImage(palmTreeImg, palmTree2.x,palmTree2.y);
-        // ctx.drawImage(palmTreeImg, palmTree3.x,palmTree3.y);
-        // ctx.drawImage(palmTreeImg, palmTree4.x,palmTree4.y);
-        // ctx.drawImage(palmTreeImg, palmTree5.x,palmTree4.y);
-        // ctx.drawImage(palmTreeImg, palmTree6.x,palmTree4.y);
-        // ctx.drawImage(palmTreeImg, palmTree7.x,palmTree4.y);
-        // ctx.drawImage(palmTreeImg, palmTree8.x,palmTree4.y);
+        ctx.drawImage(palmTreeImg, palmTree2.x,palmTree2.y);
+        ctx.drawImage(palmTreeImg, palmTree3.x,palmTree3.y);
+        ctx.drawImage(palmTreeImg, palmTree4.x,palmTree4.y);
     }
 
 //score//
@@ -602,35 +544,8 @@ let reset = function (){
         placeItem(palmTree2);
         placeItem(palmTree3);
         placeItem(palmTree4);
-        placeItem(palmTree5);
-        placeItem(palmTree6);
-        placeItem(palmTree7);
-        placeItem(palmTree8);
 
-        shouldRunUpdate = true;
-    
-    // crab1.x= 64 + (Math.random() * (canvas.width - 192));
-    // crab1.y =64 + (Math.random() * (canvas.height - 192));
-    // crab2.x= 64 + (Math.random() * (canvas.width - 192));
-    // crab2.y =64 + (Math.random() * (canvas.height - 192));
-    // crab3.x= 64 + (Math.random() * (canvas.width - 192));
-    // crab3.y =64 + (Math.random() * (canvas.height - 192));
-    // crab4.x= 64 + (Math.random() * (canvas.width - 192));
-    // crab4.y =64 + (Math.random() * (canvas.height - 192));
-
-    // pearl.x= 64 + (Math.random() * (canvas.width - 192));
-    // pearl.y =64 + (Math.random() * (canvas.height - 192));
-
-    // palmTree1.x = 64 + (Math.random() * (canvas.width -192));
-    // palmTree1.y = 64 + (Math.random() * (canvas.height -192));
-    // palmTree2.x = 64 + (Math.random() * (canvas.width -192));
-    // palmTree2.y = 64 + (Math.random() * (canvas.height -192));
-    // palmTree3.x = 64 + (Math.random() * (canvas.width -192));
-    // palmTree3.y = 64 + (Math.random() * (canvas.height -192));
-    // palmTree4.x = 64 + (Math.random() * (canvas.width -192));
-    // palmTree4.y = 64 + (Math.random() * (canvas.height -192));
-
-    
+        shouldRunUpdate = true;    
 };
 
 let placeItem = function (character){
@@ -663,17 +578,6 @@ let placeItem = function (character){
 
 //Check item//
 let checkPosition = function(character, girl, direction){
-
-    //necesito checar  girl con respecto a la posicion de character
-    //posicion de inicio character
-    //posicion de inicio girl 
-    //width y height de cada character
-    //posicion de inicio + width posicion final del character
-    //posicion de inicio + height posicion final del character
-    //a la derecha; posicion x final de girl y posicion incial de character.
-    // a la izquierda; posicion x inicial de girl y posicion final de character.
-    //arriba, posicion y final de girl, inicial de character,
-    //abajo, posicion y inicial de girl, final de character
 
     let characterPosition = {
         initial: {
